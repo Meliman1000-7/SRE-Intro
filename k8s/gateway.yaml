@@ -12,10 +12,12 @@ spec:
       labels:
         app: gateway
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
         - name: gateway
-          image: quickticket-gateway:v1
-          imagePullPolicy: Never
+          image: ghcr.io/meliman1000-7/quickticket-gateway:41504846e6cccf48f6d85e2c42b7de91fbda3080
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
