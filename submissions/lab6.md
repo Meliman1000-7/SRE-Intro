@@ -165,9 +165,4 @@ The per-endpoint checkout alert. The global error ratio dilutes a 50% checkout f
 
 ### Cross-test results
 
-- Tester: CLASSMATE_NAME
-- Injected failure: FAILURE (not disclosed to tester)
-- Resolved using only the runbook: YES/NO, in MM:SS
-- Unclear or missing: FEEDBACK
-- Runbook changes after feedback: CHANGES
-
+Not done: no classmate was available to run the runbook blind. The failure mode itself was verified by stopping Redis: reservations returned 504 `Events service timeout`, gateway health showed `events: down`, and events logs showed `Redis unavailable ... connecting to redis:6379`.
