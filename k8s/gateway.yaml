@@ -10,13 +10,16 @@ spec:
     canary:
       steps:
         - setWeight: 20
-        - pause: {duration: 60s}
-        - setWeight: 40
-        - pause: {duration: 60s}
-        - setWeight: 60
-        - pause: {duration: 60s}
-        - setWeight: 80
-        - pause: {duration: 30s}
+        - pause: {duration: 20s}
+        - analysis:
+            templates:
+              - templateName: gateway-error-rate
+            args:
+              - name: canary-hash
+                valueFrom:
+                  podTemplateHashValue: Latest
+        - setWeight: 50
+        - pause: {duration: 20s}
         - setWeight: 100
   selector:
     matchLabels:
@@ -43,16 +46,19 @@ spec:
               value: "5000"
             - name: APP_VERSION
               value: "v2"
+          # Probes hit /metrics, not /health: /health returns 503 when events or
+          # payments are down, which would restart or unready every gateway pod
+          # during a downstream outage (and hide a bad canary from analysis).
           livenessProbe:
             httpGet:
-              path: /health
+              path: /metrics
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 10
             failureThreshold: 3
           readinessProbe:
             httpGet:
-              path: /health
+              path: /metrics
               port: 8080
             periodSeconds: 5
             failureThreshold: 2
