@@ -164,9 +164,6 @@ kubectl scale deployment/mixedload --replicas=3
 
 **Change** (`k8s/events.yaml`):
 ```diff
-+          # /metrics, not /health: /health returns 503 when Redis is down, which made
-+          # kubelet restart events and unready it, turning a Redis outage into a full
-+          # outage of the read path (Lab 8, experiment 3).
            livenessProbe:
              httpGet:
 -              path: /health
