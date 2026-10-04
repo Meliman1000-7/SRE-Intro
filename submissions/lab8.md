@@ -54,7 +54,7 @@ Zero client-side failures.
 
 **Hypothesis vs reality:** matched, and was slightly better than expected: no in-flight requests failed. Endpoint removal plus uvicorn's graceful shutdown on SIGTERM drained the pod cleanly, and the 4 remaining pods picked up its share (~3.3 → ~4 RPS each). Replacement was Ready in 5.9 s.
 
-**To improve resilience against this failure, I would** add a PodDisruptionBudget (`minAvailable: 4`) so voluntary evictions such as node drains can never take out several gateway pods at once.
+**Improvement:** add a PodDisruptionBudget (`minAvailable: 4`) so voluntary evictions such as node drains can never take out several gateway pods at once.
 
 ### Experiment 2 — Payment latency
 
@@ -86,7 +86,7 @@ Recovery at 11:19:57: 16.89 RPS, 0 errors.
 - Surprise 1: throughput fell **85%** (16.8 → 2.5 RPS) at 2 s with zero errors. A latency-only fault looks "green" on error-based alerts while users wait 2+ s per checkout.
 - Surprise 2: one `/pay` 503 `payments unreachable` at 11:14:58 was caused by the `kubectl set env` rollout itself. Payments runs a single replica, so the restart briefly broke connections.
 
-**To improve resilience against this failure, I would** add a latency SLO alert on `/pay` p99 and give payments 2+ replicas. A real circuit breaker (Lab 11) would fail fast instead of making every request wait 5 s at 6000 ms.
+**Improvement:** add a latency SLO alert on `/pay` p99 and give payments 2+ replicas. A real circuit breaker (Lab 11) would fail fast instead of making every request wait 5 s at 6000 ms.
 
 ### Experiment 3 — Redis failure
 
@@ -120,7 +120,7 @@ Redis back at 11:21:23, events Ready at 11:21:27, `/events` 200.
 
 **Hypothesis vs reality:** fully matched, including the predicted surprise. `/reserve` failed first (504 after the 5 s gateway timeout). Then events' own liveness and readiness probes, which point at `/health` and so depend on Redis, restarted it and pulled it from the Service. `/events`, which needs only Postgres, went down too, and the error rate hit **100%**. A cache/hold dependency took down the whole system.
 
-**To improve resilience against this failure, I would** point events' probes at an endpoint that doesn't depend on Redis, so a Redis outage only breaks reservations (done in the Bonus).
+**Improvement:** point events' probes at an endpoint that doesn't depend on Redis, so a Redis outage only breaks reservations (done in the Bonus).
 
 ## Task 2 — Combined Failure: Degraded Dependencies
 
