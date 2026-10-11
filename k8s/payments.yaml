@@ -16,7 +16,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: payments
-          image: ghcr.io/meliman1000-7/quickticket-payments:e0a8cf6d13676d33d61bb650ccff1d06a4a3317e
+          image: ghcr.io/meliman1000-7/quickticket-payments:b924bbb543dca8450106ca498ed0763b8d4917f6
           imagePullPolicy: Always
           ports:
             - containerPort: 8082

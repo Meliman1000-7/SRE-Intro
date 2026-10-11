@@ -33,7 +33,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: gateway
-          image: ghcr.io/meliman1000-7/quickticket-gateway:e0a8cf6d13676d33d61bb650ccff1d06a4a3317e
+          image: ghcr.io/meliman1000-7/quickticket-gateway:b924bbb543dca8450106ca498ed0763b8d4917f6
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
