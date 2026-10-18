@@ -29,6 +29,13 @@ spec:
       labels:
         app: gateway
     spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: gateway
       imagePullSecrets:
         - name: ghcr-secret
       containers:
