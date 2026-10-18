@@ -41,6 +41,10 @@ spec:
               value: "1000"
             - name: RESERVATION_TTL
               value: "300"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 5"]
           livenessProbe:
             httpGet:
               path: /metrics
