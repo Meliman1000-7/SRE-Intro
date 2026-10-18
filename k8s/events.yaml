@@ -16,7 +16,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: events
-          image: ghcr.io/meliman1000-7/quickticket-events:e090300fce79e83260eeb02b359d4b7d577865c4
+          image: ghcr.io/meliman1000-7/quickticket-events:ec4931625d15d0ae428290f4c9692eb1ff98ce32
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
