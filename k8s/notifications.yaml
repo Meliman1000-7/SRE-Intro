@@ -16,7 +16,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: notifications
-          image: ghcr.io/meliman1000-7/quickticket-notifications:latest
+          image: ghcr.io/meliman1000-7/quickticket-notifications:e090300fce79e83260eeb02b359d4b7d577865c4
           imagePullPolicy: Always
           ports:
             - containerPort: 8083
