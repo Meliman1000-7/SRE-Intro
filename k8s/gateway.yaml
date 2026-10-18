@@ -46,6 +46,8 @@ spec:
               value: "5000"
             - name: APP_VERSION
               value: "v2"
+            - name: NOTIFICATIONS_URL
+              value: "http://notifications:8083"
           livenessProbe:
             httpGet:
               path: /metrics
